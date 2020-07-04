@@ -4,12 +4,6 @@ const { check } = require('express-validator');
 const router = express.Router();
 
 
-router.get("/", (req, res) => {
-    res.send(
-        "Hello"
-    )
-})
-
 router.post("/signIn", [
     check("email", "Please Enter valid Email").isEmail().isLength({ min: 1 }),
     check("password", "password is required").isLength({ min: 3 }),

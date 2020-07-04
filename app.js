@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser')
 var cors = require('cors')
 
 const authRoutes = require('./Routes/auth');
+const userRoutes = require('./Routes/user');
+const categoryRoutes = require('./Routes/category');
 
 
 const app = express();
@@ -15,6 +17,9 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 app.use("/api/v1", authRoutes);
+app.use("/api/v1", userRoutes);
+app.use("/api/v1", categoryRoutes);
+
 
 mongoose.connect('mongodb://localhost:27017/Photo_Gallery',
     {
