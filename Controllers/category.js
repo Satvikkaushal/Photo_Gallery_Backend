@@ -9,14 +9,26 @@ exports.getCategoryById = (req, res, next, id) => {
                 })
             }
             req.category = category;
-            console.log(req.category._id);
+            console.log()
         })
     next();
 
 }
 
-exports.getAllCategories = (req, res) => {
-    res.json(req.category);
+exports.getCategory = (req, res) => {
+    return res.json(req.category);
+}
+
+exports.getAllCategory = (req, res) => {
+    Category.find().exec((err, categories) => {
+        if (err) {
+            res.status(400).json({
+                err: "category not found"
+            })
+        }
+        res.json(categories);
+    })
+
 }
 
 exports.updateCategory = (req, res) => {
