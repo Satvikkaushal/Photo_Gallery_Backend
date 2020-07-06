@@ -41,6 +41,7 @@ exports.createService = (req, res) => {
             const { name, description, charge, category, deliveryTime } = fields
             let service = new Service(fields);
             service.imageUrl = result.url;
+            service.userId = req.profile._id;
             service.save((err, service) => {
                 if (err) {
                     console.log(err);
@@ -62,4 +63,34 @@ exports.deleteService = (req, res) => {
             service: deletedService.name
         });
     })
+}
+
+exports.getServiceByCategory = (req, res) => {
+    Service.find({
+        category: req.category._id
+    }).populate("category", "name")
+        .exec((err, service) => {
+            if (err) {
+                console.log(err)
+                return res.json({
+                    err: "error"
+                })
+            }
+            res.json(service)
+        })
+}
+
+exports.getServiceByUserId = (req, res) => {
+    Service.find({
+        userId: req.profile._id
+    }).populate("category", "name")
+        .exec((err, service) => {
+            if (err) {
+                console.log(err)
+                return res.json({
+                    err: "error"
+                })
+            }
+            res.json(service)
+        })
 }

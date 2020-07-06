@@ -1,6 +1,5 @@
 const User = require("../Models/User")
 
-
 exports.getUserById = (req, res, next, id) => {
     User.findById(id)
         .exec((err, user) => {
