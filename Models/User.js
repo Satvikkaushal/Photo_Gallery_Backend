@@ -35,6 +35,10 @@ var userSchema = new Schema({
     role: {
         type: Number,
         default: 0
+    },
+    orders: {
+        type: Array,
+        default: []
     }
 
 }, { timestamps: true })

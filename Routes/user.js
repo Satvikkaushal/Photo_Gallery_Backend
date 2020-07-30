@@ -6,8 +6,8 @@ const router = express.Router();
 router.param("userId", getUserById)
 
 
-router.get("/user/:userId", isSignedIn, isAuthenticated, getUser)
-router.get("/users", isSignedIn, isAuthenticated, getAllUsers)
+router.get("/user/:userId", getUser)
+router.get("/users", getAllUsers)
 router.put("/user/:userId", isSignedIn, isAuthenticated, updateUser)
 
 

@@ -18,6 +18,8 @@ exports.getService = (req, res) => {
 
 exports.getAllServices = (req, res) => {
     Service.find()
+        .populate("category", "name")
+        .populate("userId", "name")
         .exec((err, services) => {
             if (err) { res.status(400).json({ err: "service not found" }) }
             res.json(services)
@@ -84,6 +86,7 @@ exports.getServiceByUserId = (req, res) => {
     Service.find({
         userId: req.profile._id
     }).populate("category", "name")
+        .populate("userId", "name")
         .exec((err, service) => {
             if (err) {
                 console.log(err)

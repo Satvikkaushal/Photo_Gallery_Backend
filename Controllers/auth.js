@@ -2,6 +2,7 @@ const { check, validationResult } = require('express-validator');
 const User = require('../Models/User');
 const jwt = require('jsonwebtoken');
 const expressJwt = require("express-jwt");
+const Cart = require('../Models/Cart');
 
 
 exports.signIn = (req, res) => {
@@ -60,6 +61,16 @@ exports.signUp = (req, res) => {
             })
         }
         res.json(user)
+        console.log(user._id)
+        const cart = new Cart({ userId: user._id });
+        cart.save((err, cart) => {
+            if (err) {
+                return res.status(400).json({
+                    err: "Unable to cart"
+                })
+            }
+            console.log(cart)
+        })
     })
 
 }
