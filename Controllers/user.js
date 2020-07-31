@@ -40,3 +40,36 @@ exports.updateUser = (req, res) => {
         }
     )
 }
+
+exports.addItemTocart = (req, res) => {
+    User.findByIdAndUpdate(
+        { _id: req.profile._id },
+        { $addToSet: { cart: req.body.serviceId } },
+        { new: true, "upsert": true }
+    ).exec((err, cart) => {
+        if (err) {
+            console.log(err)
+            return res.status(400).json({
+                err: "cannot update Db"
+            })
+        }
+        res.json(cart);
+        console.log(cart)
+    });
+}
+exports.removeItemFromcart = (req, res) => {
+    User.findByIdAndUpdate(
+        { _id: req.profile._id },
+        { $pull: { cart: req.body.serviceId } },
+        { new: true, "upsert": true }
+    ).exec((err, cart) => {
+        if (err) {
+            console.log(err)
+            return res.status(400).json({
+                err: "cannot update Db"
+            })
+        }
+        res.json(cart);
+        console.log(cart)
+    });
+}

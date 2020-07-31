@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const crypto = require('crypto');
 const uuidv1 = require('uuid/v1');
+const { ObjectId } = mongoose.Schema;
+
 
 var Schema = mongoose.Schema;
 
@@ -36,10 +38,17 @@ var userSchema = new Schema({
         type: Number,
         default: 0
     },
-    orders: {
-        type: Array,
-        default: []
-    }
+    orders: [
+        {
+            type: ObjectId,
+            ref: "Order"
+        }
+    ], cart: [
+        {
+            type: ObjectId,
+            ref: "Service"
+        }
+    ]
 
 }, { timestamps: true })
 
