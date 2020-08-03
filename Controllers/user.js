@@ -1,24 +1,27 @@
 const User = require("../Models/User")
+const Service = require("../Models/Service")
 
 exports.getUserById = (req, res, next, id) => {
-    User.findById(id)
+    User.findOne({ _id: id })
+        .populate({ path: "cart", model: "Service" })
         .exec((err, user) => {
             if (err || !user) {
                 return res.status(400).json({
                     err: "user not found"
                 })
             }
+            console.log(user)
             req.profile = user;
             next();
         })
 }
 
 exports.getUser = (req, res) => {
-    req.profile.salt = undefined;
-    req.profile.encry_password = undefined;
-    req.profile.createdAt = undefined;
-    req.profile.updatedAt = undefined;
-    req.profile.__v = undefined;
+    // req.profile.salt = undefined;
+    // req.profile.encry_password = undefined;
+    // req.profile.createdAt = undefined;
+    // req.profile.updatedAt = undefined;
+    // req.profile.__v = undefined;
     return res.json(req.profile);
 }
 

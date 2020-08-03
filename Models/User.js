@@ -1,10 +1,20 @@
 const mongoose = require('mongoose')
 const crypto = require('crypto');
 const uuidv1 = require('uuid/v1');
-const { ObjectId } = mongoose.Schema;
+const Service = require('./Service');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 var Schema = mongoose.Schema;
+
+var cartSchema = new Schema({
+    serviceId:
+    {
+        type: ObjectId,
+        ref: 'Service'
+    }
+
+})
 
 var userSchema = new Schema({
     name: {
@@ -43,12 +53,10 @@ var userSchema = new Schema({
             type: ObjectId,
             ref: "Order"
         }
-    ], cart: [
-        {
-            type: ObjectId,
-            ref: "Service"
-        }
-    ]
+    ], cart: [{
+        type: ObjectId,
+        ref: 'Service'
+    }]
 
 }, { timestamps: true })
 
