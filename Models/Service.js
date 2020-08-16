@@ -39,7 +39,6 @@ var serviceSchema = new Schema({
     },
     imageUrl: {
         type: String,
-        required: true,
         trim: true
     }
 },

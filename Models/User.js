@@ -3,18 +3,8 @@ const crypto = require('crypto');
 const uuidv1 = require('uuid/v1');
 const Service = require('./Service');
 const ObjectId = mongoose.Schema.Types.ObjectId;
-
-
 var Schema = mongoose.Schema;
 
-var cartSchema = new Schema({
-    serviceId:
-    {
-        type: ObjectId,
-        ref: 'Service'
-    }
-
-})
 
 var userSchema = new Schema({
     name: {
@@ -37,6 +27,10 @@ var userSchema = new Schema({
         maxlength: 10,
         unique: true
     },
+    profilePic: {
+        type: String,
+        trim: true
+    },
     encry_password: {
         type: String,
         required: true,
@@ -48,6 +42,9 @@ var userSchema = new Schema({
         type: Number,
         default: 0
     },
+    description:{
+        type:String
+    },
     orders: [
         {
             type: ObjectId,
@@ -56,7 +53,12 @@ var userSchema = new Schema({
     ], cart: [{
         type: ObjectId,
         ref: 'Service'
-    }]
+    }],
+    tagLine:{
+        type:String
+    },location:{
+        type:String
+    }
 
 }, { timestamps: true })
 
@@ -69,6 +71,11 @@ userSchema.virtual("password")
     .get(function () {
         return this._password;
     })
+
+userSchema.pre('save', function (next) {
+    this.tagLine = `Hey folks!, I am ${this.get('name')}, a quality service provider.` ; 
+    next();
+});
 
 userSchema.methods = {
     authenticate: function (plainPassword) {
